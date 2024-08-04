@@ -20,8 +20,8 @@ This project is a simple Django application that provides CRUD operations via RE
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/yourusername/django-mongodb-crud-api.git
-    cd django-mongodb-crud-api
+    git clone https://github.com/Atique22/crud-django.git
+    cd crud-django
     ```
 
 2. **Create and activate a virtual environment:**
