@@ -26,11 +26,6 @@ This project is a simple Django application that provides CRUD operations via RE
 
 2. **Create and activate a virtual environment:**
 
-    ```sh
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
-
 3. **Install the dependencies:**
 
     ```sh
@@ -39,7 +34,7 @@ This project is a simple Django application that provides CRUD operations via RE
 
 4. **Update MongoDB connection settings:**
 
-    Update `MONGODB_URI` in `myproject/settings.py` to match your MongoDB configuration.
+    Update `MONGODB_URI` in `settings.py` to match your MongoDB configuration.
 
 5. **Run the server:**
 
