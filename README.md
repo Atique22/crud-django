@@ -6,14 +6,14 @@ This project is a simple Django application that provides CRUD operations via RE
 
 - Create, Read, Update, and Delete items in MongoDB.
 - REST API endpoints for CRUD operations.
-- Uses `pymongo` for MongoDB interactions.
+- DB interactions.
 
 ## Requirements
 
 - Python 3.x
 - Django
 - Django REST Framework
-- pymongo
+
 
 ## Setup
 
