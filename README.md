@@ -1,6 +1,6 @@
-# Django MongoDB CRUD API
+# Django MongoDB CRUD API (ORM)
 
-This project is a simple Django application that provides CRUD operations via REST API, using MongoDB without relying on Django's ORM and models.
+This project is a simple Django application that provides CRUD operations via REST API, using DB with Django's ORM and models.
 
 ## Features
 
