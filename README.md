@@ -2,6 +2,8 @@
 
 This project is a simple Django application that provides CRUD operations via REST API, using DB with Django's ORM and models.
 
+you can configure your Django project to use different databases. Just update the requirements.txt and settings.py to match the database you're using, and the rest of your code remains the same.
+
 ## Features
 
 - Create, Read, Update, and Delete items in MongoDB.
