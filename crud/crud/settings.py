@@ -73,16 +73,25 @@ WSGI_APPLICATION = 'crud.wsgi.application'
 
 
 # Database for without orm base
-MONGODB_URI = 'mongodb://localhost:27017'
-
-# # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'djongo',
+#         'NAME': 'crudapp',
+#         'HOST': 'localhost',
+#         'PORT': 27017,
 #     }
 # }
+# MONGODB_URI = 'mongodb://localhost:27017'
+
+# # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation

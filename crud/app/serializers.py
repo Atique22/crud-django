@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from .models import Item
 
-class ItemSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=255)
-    description = serializers.CharField()
+class ItemSerializer(serializers.ModelSerializer):
+    class Meta:
+       model = Item
+       fields = ['id', 'name', 'description']

@@ -2,54 +2,63 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from bson.objectid import ObjectId
-from .mongodb import get_collection
+from .models import Item
 from .serializers import ItemSerializer
 
-collection = get_collection('crud')
 
 @api_view(['GET'])
 def list_items(request):
-    items = list(collection.find())
-    for item in items:
-        item['_id'] = str(item['_id'])
-    return Response(items)
+    items = Item.objects.all()
+    serializer = ItemSerializer(items, many=True)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def create_item(request):
     serializer = ItemSerializer(data=request.data)
     if serializer.is_valid():
-        item = serializer.validated_data
-        result = collection.insert_one(item)
-        item['_id'] = str(result.inserted_id)
-        return Response(item, status=status.HTTP_201_CREATED)
+        item = serializer.save()
+        return Response(ItemSerializer(item).data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def get_item(request, pk):
-    item = collection.find_one({'_id': ObjectId(pk)})
-    if item:
-        item['_id'] = str(item['_id'])
-        return Response(item)
-    else:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    try:
+        # Check if pk is a valid ObjectId
+        if ObjectId.is_valid(pk):
+            item = Item.objects.get(pk=ObjectId(pk))
+        else:
+            item = Item.objects.get(pk=pk)
+        serializer = ItemSerializer(item)
+        return Response(serializer.data)
+    except Item.DoesNotExist:
+        return Response({"error": "Item not found"}, status=404)
 
 @api_view(['PUT'])
 def update_item(request, pk):
-    serializer = ItemSerializer(data=request.data)
-    if serializer.is_valid():
-        item = serializer.validated_data
-        result = collection.update_one({'_id': ObjectId(pk)}, {'$set': item})
-        if result.matched_count:
-            item['_id'] = pk
-            return Response(item)
+    try:
+        # Check if pk is a valid ObjectId
+        if ObjectId.is_valid(pk):
+            item = Item.objects.get(pk=ObjectId(pk))
         else:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            item = Item.objects.get(pk=pk)
+    except Item.DoesNotExist:
+        return Response({"error": "Item not found"}, status=404)
+    serializer = ItemSerializer(item ,data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
 
 @api_view(['DELETE'])
 def delete_item(request, pk):
-    result = collection.delete_one({'_id': ObjectId(pk)})
-    if result.deleted_count:
+    try:
+        # Check if pk is a valid ObjectId
+        if ObjectId.is_valid(pk):
+            item = Item.objects.get(pk=ObjectId(pk))
+        else:
+            item = Item.objects.get(pk=pk)
+        item.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    else:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+    except Item.DoesNotExist:
+        return Response({"error": "Item not found"}, status=404)
